@@ -2,7 +2,7 @@ import { describe, it, expect } from "vitest";
 import { shallowMount } from "@vue/test-utils";
 import BaseButton from "../BaseButton.vue";
 
-describe("BaseButton", () => {
+describe("BaseButton.vue", () => {
   it("variant prop is required and must be a string", () => {
     expect(BaseButton.props).toMatchObject({
       variant: {
