@@ -1,15 +1,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&family=Ubuntu:wght@300;700&display=swap');
 
 :root {
-  --color-primary: hsl(20%, 100%, 70%);
-  --color-secondary: hsl(26.67%,	42.86%,	95.88%);
+  --color-primary: hsl(20,100%,70%);
+  --color-secondary: hsl(26.7,42.9%,95.9%);
 
   --background-color-primary: hsl(0, 0%, 99%);
   --background-color-secondary: var(--color-secondary);
 
   --text-color-primary: hsl(0, 0%, 0%);
-  --text-color-primary-light-1: hsl(17%,	3%,	31%);
-  --text-color-primary-light-2: hsl(39%, 2%,	76%);
+  --text-color-primary-light-1: hsl(140,2.5%,76.3%);
+  --text-color-primary-light-2: hsl(60,2.6%,30.6%);
   --text-color-secondary: hsl(0, 0%, 99%);
   --text-color-tertiary: var(--color-primary)
 }
@@ -20,6 +20,11 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+}
+
+::selection {
+  color: var(--text-color-secondary);
+  background: var(--color-primary);
 }
 
 body {
