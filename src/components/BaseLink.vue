@@ -54,10 +54,10 @@ const linkProps = computed(() => {
     display: flex;
     justify-content: center;
     align-items: center;
-    transition: box-shadow 0.3s ease-in-out;
+    transition: background-color 0.3s ease-in-out;
 
     &:hover {
-      box-shadow: inset 300px 0 0 0 var(--text-color-primary);
+      background-color: var(--text-color-primary);
     }
   }
 
