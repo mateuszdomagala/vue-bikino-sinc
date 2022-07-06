@@ -54,7 +54,7 @@ defineProps({
     }
   }
 
-  &--circle {
+  &--tertiary {
     cursor: pointer;
     font-size: 1.5rem;
     color: var(--text-color-primary);
