@@ -27,10 +27,32 @@
   background: var(--color-primary);
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   min-height: 100vh;
   color: var(--text-color-primary);
   background-color: var(--background-color-primary);
   font-family: 'Montserrat', sans-serif;
   line-height: 1.6;
+}
+
+@keyframes image-in {
+  from {
+    clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+  }
+  to {
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
