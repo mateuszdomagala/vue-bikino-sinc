@@ -1,10 +1,12 @@
 <script setup lang="ts">
 import TheHero from "../components/TheHero.vue";
+import TheExploreMore from "../components/TheExploreMore.vue";
 </script>
 
 <template>
   <main>
     <TheHero />
+    <TheExploreMore />
   </main>
   <div class="linear-background"></div>
 </template>
@@ -27,7 +29,7 @@ section {
 
   @media (min-width: 992px) {
     display: block;
-    min-height: 100vh;
+    min-height: 300vh;
     min-width: 100%;
     background: linear-gradient(90deg, #cccccc 0.5%, transparent 1%);
     background-size: 10% 100%;
