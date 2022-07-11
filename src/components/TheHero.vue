@@ -7,20 +7,35 @@ import BaseLink from "./BaseLink.vue";
 
 const carouselSlides = [
   {
-    img: "long-sleeved-dress",
+    img: {
+      small: "long-sleeved-dress--small",
+      medium: "long-sleeved-dress--medium",
+      large: "long-sleeved-dress--large",
+    },
     description: "Bikino Sinc long sleeved dress",
   },
   {
-    img: "hoodie-dress",
+    img: {
+      small: "hoodie-dress--small",
+      medium: "hoodie-dress--medium",
+      large: "hoodie-dress--large",
+    },
     description: "Bikino Sinc hoodie dress",
   },
   {
-    img: "sleeveless-dress",
+    img: {
+      small: "sleeveless-dress--small",
+      medium: "sleeveless-dress--medium",
+      large: "sleeveless-dress--large",
+    },
     description: "Bikino Sinc sleeveless dress",
   },
-
   {
-    img: "crete-dress",
+    img: {
+      small: "crete-dress--small",
+      medium: "crete-dress--medium",
+      large: "crete-dress--large",
+    },
     description: "Bikino Sinc crete dress",
   },
 ];
@@ -57,24 +72,44 @@ const getImageUrl = (slide: string) => {
         :key="index"
         class="carousel__slide-main"
       >
-        <img
-          v-show="index === currentActiveSlide"
-          :src="getImageUrl(slide.img)"
-          :alt="slide.description"
-          loading="lazy"
-        />
+        <picture>
+          <source
+            :srcset="getImageUrl(slide.img.large)"
+            media="(min-width: 992px)"
+          />
+          <source
+            :srcset="getImageUrl(slide.img.medium)"
+            media="(min-width: 640px)"
+          />
+          <img
+            v-show="index === currentActiveSlide"
+            :src="getImageUrl(slide.img.small)"
+            :alt="slide.description"
+            loading="lazy"
+          />
+        </picture>
       </CarouselSliderItem>
       <CarouselSliderItem
         v-for="(slide, index) in carouselSlides"
         :key="index"
         class="carousel__slide-secondary"
       >
-        <img
-          v-show="index === nextActiveSlide"
-          :src="getImageUrl(slide.img)"
-          :alt="slide.description"
-          loading="lazy"
-        />
+        <picture>
+          <source
+            :srcset="getImageUrl(slide.img.large)"
+            media="(min-width: 992px)"
+          />
+          <source
+            :srcset="getImageUrl(slide.img.medium)"
+            media="(min-width: 640px)"
+          />
+          <img
+            v-show="index === nextActiveSlide"
+            :src="getImageUrl(slide.img.small)"
+            :alt="slide.description"
+            loading="lazy"
+          />
+        </picture>
       </CarouselSliderItem>
       <div class="carousel__buttons">
         <BaseButton variant="tertiary" @click="nextSlide">&xlarr;</BaseButton>
@@ -112,11 +147,15 @@ const getImageUrl = (slide: string) => {
       color: var(--text-color-primary-light-1);
       align-self: end;
       animation: fade-in 2s;
-      font-size: 0.85rem;
+      font-size: 0.75rem;
     }
 
     @media (min-width: 1461px) {
       font-size: 1rem;
+    }
+
+    @media (min-width: 992px) and (-webkit-min-device-pixel-ratio: 1.25) {
+      font-size: 0.65rem;
     }
   }
 
@@ -145,11 +184,16 @@ const getImageUrl = (slide: string) => {
 
     @media (min-width: 992px) {
       grid-area: 3 / 6 / 4 / 9;
+      font-size: 1rem;
     }
 
     @media (min-width: 1200px) {
       grid-area: 3 / 6 / 4 / 8;
       font-size: 1.06rem;
+    }
+
+    @media (min-width: 992px) and (-webkit-min-device-pixel-ratio: 1.25) {
+      font-size: 0.8rem;
     }
   }
 
@@ -178,6 +222,10 @@ const getImageUrl = (slide: string) => {
 
     @media (min-width: 1200px) {
       font-size: 10.3rem;
+    }
+
+    @media (min-width: 992px) and (-webkit-min-device-pixel-ratio: 1.25) {
+      font-size: 8.3rem;
     }
 
     &-line {
@@ -278,6 +326,12 @@ const getImageUrl = (slide: string) => {
   display: grid;
   grid-template-columns: repeat(9, 1fr);
   grid-template-rows: repeat(9, 1fr);
+
+  & img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
 
   &__slide-main {
     grid-area: 1 / 3 / 9 / 10;
