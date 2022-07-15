@@ -47,7 +47,7 @@ defineProps({
     font-size: 2.5rem;
 
     @media (min-width: 992px) {
-      font-size: 8rem;
+      font-size: 7rem;
     }
   }
   &--h2 {
