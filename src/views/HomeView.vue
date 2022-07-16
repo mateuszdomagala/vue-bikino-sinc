@@ -2,6 +2,7 @@
 import TheHero from "../components/TheHero.vue";
 import TheExploreMore from "../components/TheExploreMore.vue";
 import TheShop from "../components/TheShop.vue";
+import TheFooter from "../components/TheFooter.vue";
 </script>
 
 <template>
@@ -9,6 +10,7 @@ import TheShop from "../components/TheShop.vue";
     <TheHero />
     <TheExploreMore />
     <TheShop />
+    <TheFooter />
   </main>
   <div class="linear-background"></div>
 </template>
@@ -31,7 +33,7 @@ section {
 
   @media (min-width: 992px) {
     display: block;
-    min-height: 490vh;
+    min-height: calc(400vh + 900px);
     min-width: 100%;
     background: linear-gradient(90deg, #cccccc 0.5%, transparent 1%);
     background-size: 10% 100%;
