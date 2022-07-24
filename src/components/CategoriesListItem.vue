@@ -1,18 +1,18 @@
 <script setup lang="ts">
-import type { CategoryWithAssets } from "@/composables/useCategories";
+import type { CategoryExtended } from "@/composables/useCategories";
 import type { PropType } from "vue";
 import BaseLink from "./BaseLink.vue";
 
 defineProps({
   category: {
-    type: Object as PropType<CategoryWithAssets>,
+    type: Object as PropType<CategoryExtended>,
     required: true,
   },
 });
 </script>
 
 <template>
-  <BaseLink :to="{ name: '', params: { query: category.id } }">
+  <BaseLink :to="{ path: 'shop', query: { page: 1, category: category.id } }">
     <div class="category__card">
       <div class="category__image">
         <img
