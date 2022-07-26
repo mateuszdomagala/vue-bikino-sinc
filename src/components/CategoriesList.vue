@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import type { CategoryWithAssets } from "@/composables/useCategories";
+import type { CategoryExtended } from "@/composables/useCategories";
 import type { PropType } from "vue";
 import CategoriesListItem from "./CategoriesListItem.vue";
 
 defineProps({
   categories: {
-    type: Array as PropType<CategoryWithAssets[]>,
+    type: Array as PropType<CategoryExtended[]>,
     default: () => [],
   },
 });
