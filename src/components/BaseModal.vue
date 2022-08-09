@@ -59,6 +59,7 @@ const close = () => {
 
     @media (min-width: 992px) {
       width: 80%;
+      height: auto;
     }
 
     &__header,
