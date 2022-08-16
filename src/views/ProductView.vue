@@ -122,7 +122,7 @@ const handleAddToCart = async () => {
         </div>
       </div>
     </div>
-    <BaseModal :visible="isModalOpen" @close="toggleModal">
+    <BaseModal :visible-modal="isModalOpen" @close="toggleModal">
       <template v-slot:header>Size Guide</template>
       <template v-slot:content>
         <div class="modal__content">

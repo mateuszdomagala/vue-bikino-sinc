@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, watch } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import { useProducts } from "@/composables/useProducts";
 import { useCategories } from "@/composables/useCategories";
@@ -27,6 +27,7 @@ const { categories } = useCategories();
 const { products, metadata, error, isLoading, fetchData } = useProducts({
   limit: recordsPerPage.value,
   page: page.value,
+  query: route.query.search,
   category_id: route.query.category,
   sortBy: selected.value === "latest" ? "created_at" : "price",
   sortDirection: selected.value === "latest" ? "asc" : selected.value,
@@ -53,13 +54,6 @@ const onPageChange = (newPage: number) => {
     },
   });
 
-  fetchData({
-    limit: recordsPerPage.value,
-    page: page.value,
-    category_id: category.value,
-    sortBy: selected.value === "latest" ? "created_at" : "price",
-    sortDirection: selected.value === "latest" ? "asc" : selected.value,
-  });
 };
 
 const onCategoryChange = (categoryId: string) => {
@@ -78,18 +72,11 @@ const onCategoryChange = (categoryId: string) => {
     },
   });
 
-  fetchData({
-    limit: recordsPerPage.value,
-    page: page.value,
-    category_id: category.value,
-    sortBy: selected.value === "latest" ? "created_at" : "price",
-    sortDirection: selected.value === "latest" ? "asc" : selected.value,
-  });
-
   if (isOpen.value === true) {
     isOpen.value = false;
   }
 };
+
 const onSelectChange = () => {
   page.value = 1;
 
@@ -103,14 +90,19 @@ const onSelectChange = () => {
     },
   });
 
-  fetchData({
-    limit: recordsPerPage.value,
-    page: page.value,
-    category_id: category.value,
-    sortBy: selected.value === "latest" ? "created_at" : "price",
-    sortDirection: selected.value === "latest" ? "asc" : selected.value,
-  });
 };
+watch(
+  () => route.params,
+  () =>
+    fetchData({
+      limit: recordsPerPage.value,
+      page: page.value,
+      query: route.query.search,
+      category_id: category.value,
+      sortBy: selected.value === "latest" ? "created_at" : "price",
+      sortDirection: selected.value === "latest" ? "asc" : selected.value,
+    })
+);
 </script>
 
 <template>
