@@ -39,11 +39,7 @@ describe("BasePagination.vue", () => {
       },
     });
     wrapper.find('[data-testid="first"]').trigger("click");
-    const emitted = wrapper.emitted("pagechanged");
-
-    if (emitted?.length) {
-      expect(emitted[0]).toEqual([1]);
-    }
+    expect(wrapper.emitted("pagechanged")).toEqual([[1]]);
   });
 
   it("goes to the previous page", () => {
@@ -55,11 +51,7 @@ describe("BasePagination.vue", () => {
       },
     });
     wrapper.find('[data-testid="previous"]').trigger("click");
-    const emitted = wrapper.emitted("pagechanged");
-
-    if (emitted?.length) {
-      expect(emitted[0]).toEqual([2]);
-    }
+    expect(wrapper.emitted("pagechanged")).toEqual([[2]]);
   });
 
   it("goes to the selected page", () => {
@@ -71,11 +63,7 @@ describe("BasePagination.vue", () => {
       },
     });
     wrapper.find('[data-testid="page"]').trigger("click");
-    const emitted = wrapper.emitted("pagechanged");
-
-    if (emitted?.length) {
-      expect(emitted[0]).toEqual([2]);
-    }
+    expect(wrapper.emitted("pagechanged")).toEqual([[2]]);
   });
 
   it("goes to the next page", () => {
@@ -87,11 +75,7 @@ describe("BasePagination.vue", () => {
       },
     });
     wrapper.find('[data-testid="next"]').trigger("click");
-    const emitted = wrapper.emitted("pagechanged");
-
-    if (emitted?.length) {
-      expect(emitted[0]).toEqual([4]);
-    }
+    expect(wrapper.emitted("pagechanged")).toEqual([[4]]);
   });
 
   it("goes to the last page", () => {
@@ -103,11 +87,7 @@ describe("BasePagination.vue", () => {
       },
     });
     wrapper.find('[data-testid="last"]').trigger("click");
-    const emitted = wrapper.emitted("pagechanged");
-
-    if (emitted?.length) {
-      expect(emitted[0]).toEqual([10]);
-    }
+    expect(wrapper.emitted("pagechanged")).toEqual([[10]]);
   });
 
   it("renders active pagination element", () => {
