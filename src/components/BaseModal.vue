@@ -75,6 +75,7 @@ const close = () => {
     justify-content: center;
     align-items: center;
     z-index: 99;
+    height: 100%;
 
     &--right {
       @media (min-width: 992px) {
@@ -92,6 +93,7 @@ const close = () => {
     height: 100%;
     background-color: var(--background-color-primary);
     overflow-y: auto;
+    position: relative;
 
     &--center {
       @media (min-width: 992px) {
@@ -102,8 +104,12 @@ const close = () => {
 
     &--right {
       @media (min-width: 992px) {
-        width: 30%;
+        width: 28rem;
         height: 100%;
+      }
+
+      &::-webkit-scrollbar {
+        width: 0;
       }
     }
 
@@ -135,6 +141,7 @@ const close = () => {
     &__content {
       display: flex;
       align-items: center;
+      width: 100%;
     }
   }
 }

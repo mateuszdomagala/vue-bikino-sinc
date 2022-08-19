@@ -1,3 +1,8 @@
+<script lang="ts">
+export default {
+  inheritAttrs: false,
+};
+</script>
 <script setup lang="ts">
 import TheHero from "../components/TheHero.vue";
 import TheExploreMore from "../components/TheExploreMore.vue";

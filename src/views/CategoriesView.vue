@@ -1,3 +1,8 @@
+<script lang="ts">
+export default {
+  inheritAttrs: false,
+};
+</script>
 <script setup lang="ts">
 import { useCategories } from "@/composables/useCategories";
 import BaseHeadline from "../components/BaseHeadline.vue";
