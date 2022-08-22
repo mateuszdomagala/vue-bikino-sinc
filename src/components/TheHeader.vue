@@ -53,7 +53,7 @@ const handleSearch = (searchKeyword: string) => {
     });
   } else {
     router.push({
-      path: "shop",
+      path: "/shop",
       query: { ...route.query, page: 1, search: searchKeyword },
     });
   }
@@ -68,31 +68,37 @@ const openShoppingCart = () => {
 <template>
   <header class="header">
     <div class="header__logo">
-      <BaseLink class="logo" to="/">bikino.</BaseLink>
+      <BaseLink class="logo" to="/" data-testid="logo">bikino.</BaseLink>
       <BaseLink
         href="https://www.facebook.com/"
         target="_blank"
         rel="noopener noreferrer"
+        data-testid="facebook"
         ><img src="../assets/icons/facebook.svg" alt="facebook icon"
       /></BaseLink>
       <BaseLink
         href="https://twitter.com/"
         target="_blank"
         rel="noopener noreferrer"
+        data-testid="twitter"
         ><img src="../assets/icons/twitter.svg" alt="twitter icon"
       /></BaseLink>
     </div>
     <div class="header__search">
-      <BaseButton variant="tertiary" @click="toggleModal"
+      <BaseButton variant="tertiary" @click="toggleModal" data-testid="search"
         ><img src="../assets/icons/search.svg" alt="search icon"
       /></BaseButton>
     </div>
     <transition name="wobble" mode="out-in">
       <div class="header__cart" :key="cartTotalItems">
-        <BaseButton variant="tertiary" @click="openShoppingCart">
+        <BaseButton
+          variant="tertiary"
+          @click="openShoppingCart"
+          data-testid="shopping-cart"
+        >
           <img src="../assets/icons/shopping-bag.svg" alt="shopping bag icon" />
           <div class="circle">
-            <p>{{ cartTotalItems }}</p>
+            <p class="circle__total">{{ cartTotalItems }}</p>
           </div>
         </BaseButton>
       </div>
@@ -102,6 +108,7 @@ const openShoppingCart = () => {
         class="menu-icon"
         :class="{ active: isMenuOpen }"
         @click="toggleMenu"
+        data-testid="menu"
       >
         <span class="menu-icon__line menu-icon__line-left"></span>
         <span class="menu-icon__line"></span>
@@ -113,17 +120,17 @@ const openShoppingCart = () => {
         <div class="inner">
           <ul class="menu__list" @click="toggleMenu">
             <li class="menu__item">
-              <BaseLink to="/">
+              <BaseLink to="/" data-testid="home">
                 <span class="menu__item-name">home</span>
               </BaseLink>
             </li>
             <li class="menu__item">
-              <BaseLink to="/shop">
+              <BaseLink to="/shop" data-testid="shop">
                 <span class="menu__item-name">shop</span>
               </BaseLink>
             </li>
             <li class="menu__item">
-              <BaseLink to="/categories">
+              <BaseLink to="/categories" data-testid="categories">
                 <span class="menu__item-name">categories</span>
               </BaseLink>
             </li>
@@ -166,7 +173,12 @@ const openShoppingCart = () => {
     align-items: center;
 
     & img {
-      transition: filter 0.3s ease-in-out;
+      display: none;
+
+      @media (min-width: 992px) {
+        display: block;
+        transition: filter 0.3s ease-in-out;
+      }
 
       &:hover {
         filter: invert(65%) sepia(71%) saturate(704%) hue-rotate(318deg)
@@ -287,10 +299,10 @@ const openShoppingCart = () => {
     transition: transform 0.2s ease, background-color 0.5s ease;
   }
   &__line-left {
-    width: $size / 2;
+    width: calc($size / 2);
   }
   &__line-right {
-    width: $size / 2;
+    width: calc($size / 2);
     float: right;
   }
 
