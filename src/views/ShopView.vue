@@ -221,6 +221,12 @@ watch(
           alt="No products were found image"
         />
         No products were found matching your selection
+        <BaseButton
+          v-if="isFilterActive"
+          variant="secondary"
+          @click="clearAllFilters"
+          >Clear all filters</BaseButton
+        >
       </div>
       <div class="shop__categories shop__categories--desktop">
         <ul class="shop__categories-list">
@@ -282,6 +288,7 @@ section {
       flex-direction: column;
       align-items: center;
       margin-top: 5rem;
+      gap: 1rem;
 
       & img {
         width: 15rem;
