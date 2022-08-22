@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, watch } from "vue";
+import { ref, watch, computed } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import { useProducts } from "@/composables/useProducts";
 import { useCategories } from "@/composables/useCategories";
@@ -53,7 +53,6 @@ const onPageChange = (newPage: number) => {
       page: page.value,
     },
   });
-
 };
 
 const onCategoryChange = (categoryId: string) => {
@@ -89,8 +88,24 @@ const onSelectChange = () => {
       sortDirection: selected.value === "latest" ? "asc" : selected.value,
     },
   });
-
 };
+
+const clearAllFilters = () => {
+  router.push({
+    path: route.path,
+  });
+
+  page.value = 1;
+  category.value = null;
+  selected.value = "latest";
+};
+
+const isFilterActive = computed(() => {
+  return router.currentRoute.value.fullPath !== router.currentRoute.value.path
+    ? true
+    : false;
+});
+
 watch(
   () => route.params,
   () =>
@@ -143,18 +158,36 @@ watch(
           </template>
         </BaseModal>
         <div class="shop__sort">
-          Products found: {{ metadata?.pagination.total }}
+          <div class="shop__sort-found">
+            Products found: {{ metadata?.pagination.total }}
+            <BaseButton
+              v-if="isFilterActive"
+              variant="secondary"
+              @click="clearAllFilters"
+              >Clear all filters</BaseButton
+            >
+          </div>
           <div class="shop__sort-filter">
             <label for="sort">Sort by:</label>
-            <select v-model="selected" @change="onSelectChange()" id="sort">
+            <select v-model="selected" @change="onSelectChange" id="sort">
               <option disabled value="">Please select one</option>
               <option value="latest">Latest</option>
               <option value="asc">Price from low to high</option>
               <option value="desc">Price from high to low</option>
             </select>
           </div>
-          <BaseButton variant="secondary" @click="toggleModal"
+          <BaseButton
+            variant="secondary"
+            @click="toggleModal"
+            class="shop__sort--mobile"
             >Categories</BaseButton
+          >
+          <BaseButton
+            v-if="isFilterActive"
+            variant="secondary"
+            @click="clearAllFilters"
+            class="shop__sort--mobile"
+            >Clear all filters</BaseButton
           >
         </div>
         <ProductsList :products="products" />
@@ -166,7 +199,7 @@ watch(
           @pagechanged="onPageChange"
         />
       </div>
-      <div v-if="isLoading" class="shop__products">
+      <div v-else-if="isLoading" class="shop__products">
         <div class="shop__sort">
           <BaseSkeleton /><BaseSkeleton /><BaseSkeleton
             class="skeleton--mobile"
@@ -181,7 +214,14 @@ watch(
           />
         </div>
       </div>
-      <div v-if="error" class="shop__products">{{ error }}</div>
+      <div v-else-if="error" class="shop__products">{{ error }}</div>
+      <div v-else class="shop__products shop__products--empty">
+        <img
+          src="../assets/icons/empty_product.svg"
+          alt="No products were found image"
+        />
+        No products were found matching your selection
+      </div>
       <div class="shop__categories shop__categories--desktop">
         <ul class="shop__categories-list">
           <li
@@ -224,17 +264,32 @@ section {
   display: grid;
   grid-template-columns: repeat(10, 1fr);
   grid-template-rows: repeat(11, 1fr);
-  height: auto;
+  height: 150vh;
 }
 
 .shop {
   &__products {
-    grid-area: 2 / 2 / 12 / 10;
-    margin-top: -4rem;
+    grid-area: 3 / 2 / 12 / 10;
 
     @media (min-width: 992px) {
       grid-area: 3 / 2 / 12 / 8;
+      margin-top: 0;
       z-index: 3;
+    }
+
+    &--empty {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 5rem;
+
+      & img {
+        width: 15rem;
+
+        @media (min-width: 992px) {
+          width: 26rem;
+        }
+      }
     }
   }
 
@@ -250,9 +305,17 @@ section {
       padding: 3rem 0;
     }
 
-    & button {
-      @media (min-width: 992px) {
+    &-found {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+
+      & button {
         display: none;
+
+        @media (min-width: 992px) {
+          display: block;
+        }
       }
     }
 
@@ -261,6 +324,12 @@ section {
       padding: 0.5rem;
       margin-left: 0.5rem;
       font-size: 1rem;
+    }
+
+    &--mobile {
+      @media (min-width: 992px) {
+        display: none;
+      }
     }
   }
 
@@ -315,17 +384,17 @@ section {
 }
 
 .headline {
-  grid-area: 1 / 2 / 2 / 11;
+  grid-area: 2 / 2 / 3 / 11;
   align-self: center;
   animation: fade-in 2s;
 
   @media (min-width: 992px) {
-    grid-area: 1 / 2 / 3 / 11;
+    grid-area: 1 / 2 / 4 / 11;
     font-size: 7rem;
   }
 
   @media (min-width: 992px) and (max-width: 1400px) and (-webkit-min-device-pixel-ratio: 1.25) {
-    grid-area: 1 / 2 / 3 / 11;
+    grid-area: 1 / 2 / 4 / 11;
     font-size: 5rem;
   }
 }
