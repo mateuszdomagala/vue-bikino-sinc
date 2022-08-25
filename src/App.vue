@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, provide  } from "vue";
 import { RouterView } from "vue-router";
 import { useCart } from "@/composables/useCart";
 import TheHeader from "./components/TheHeader.vue";
@@ -9,8 +9,11 @@ import ShoppingCart from "./components/ShoppingCart.vue";
 const isModalOpen = ref<boolean>(false);
 const isContentVisible = ref<boolean>(false);
 
-const { cart, error, addToCart, updateQuantity, removeFromCart, emptyCart } =
+const { cart, error, addToCart, updateQuantity, removeFromCart, emptyCart, refreshCart } =
   useCart();
+
+provide("cart", cart);
+provide("refreshCart", refreshCart);
 
 const toggleModalContent = () => {
   isContentVisible.value = !isContentVisible.value;
