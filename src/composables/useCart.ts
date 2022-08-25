@@ -80,6 +80,19 @@ export const useCart = () => {
     }
   };
 
+  const refreshCart = async () => {
+    error.value = null;
+
+    try {
+      const data = await commerce.cart.refresh();
+      cart.value = data;
+    } catch (err) {
+      error.value = `There is an error refreshing your cart, error: ${
+        (err as Error).message
+      }`;
+    }
+  };
+
   fetchCart();
 
   return {
@@ -90,5 +103,6 @@ export const useCart = () => {
     updateQuantity,
     removeFromCart,
     emptyCart,
+    refreshCart,
   };
 };
