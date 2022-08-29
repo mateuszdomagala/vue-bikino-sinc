@@ -61,7 +61,7 @@ section {
 }
 
 .headline {
-  grid-area: 2 / 2 / 4 / 11;
+  grid-area: 3 / 2 / 4 / 11;
   animation: fade-in 2s;
 
   @media (min-width: 992px) {
