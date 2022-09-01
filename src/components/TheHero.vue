@@ -72,7 +72,7 @@ const getImageUrl = (slide: string) => {
         :key="index"
         class="carousel__slide-main"
       >
-        <picture>
+        <picture v-show="index === currentActiveSlide">
           <source
             :srcset="getImageUrl(slide.img.large)"
             media="(min-width: 992px)"
@@ -82,10 +82,9 @@ const getImageUrl = (slide: string) => {
             media="(min-width: 640px)"
           />
           <img
-            v-show="index === currentActiveSlide"
             :src="getImageUrl(slide.img.small)"
             :alt="slide.description"
-            loading="lazy"
+            fetchpriority="high"
           />
         </picture>
       </CarouselSliderItem>
@@ -94,7 +93,7 @@ const getImageUrl = (slide: string) => {
         :key="index"
         class="carousel__slide-secondary"
       >
-        <picture>
+        <picture v-show="index === nextActiveSlide">
           <source
             :srcset="getImageUrl(slide.img.large)"
             media="(min-width: 992px)"
@@ -104,10 +103,9 @@ const getImageUrl = (slide: string) => {
             media="(min-width: 640px)"
           />
           <img
-            v-show="index === nextActiveSlide"
             :src="getImageUrl(slide.img.small)"
             :alt="slide.description"
-            loading="lazy"
+            fetchpriority="high"
           />
         </picture>
       </CarouselSliderItem>
@@ -337,6 +335,13 @@ const getImageUrl = (slide: string) => {
     grid-area: 1 / 3 / 9 / 10;
     overflow: hidden;
     animation: image-in 1s cubic-bezier(0.5, 0, 0.1, 1) 2s backwards;
+    position: relative;
+
+    & picture {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+    }
 
     @media (min-width: 992px) {
       grid-area: 1 / 6 / 10 / 9;
@@ -351,6 +356,13 @@ const getImageUrl = (slide: string) => {
       grid-area: 2 / 1 / 6 / 3;
       overflow: hidden;
       animation: image-in 1s cubic-bezier(0.5, 0, 0.1, 1) 2s backwards;
+      position: relative;
+
+      & picture {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+      }
     }
   }
 
