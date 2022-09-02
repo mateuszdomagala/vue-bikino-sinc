@@ -17,7 +17,7 @@ defineProps({
       <div class="category__image">
         <img
           :src="category.assets[0].url"
-          :alt="category.assets[0].description || undefined"
+          :alt="category.description || undefined"
         />
       </div>
       <div class="category__details">
