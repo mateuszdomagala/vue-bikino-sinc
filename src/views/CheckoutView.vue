@@ -8,13 +8,14 @@ export default {
 </script>
 
 <script setup lang="ts">
-import { ref, inject } from "vue";
+import { ref, inject, computed } from "vue";
 import { useRouter } from "vue-router";
 import { useCheckout } from "@/composables/useCheckout";
 import type { Cart } from "@chec/commerce.js/types/cart";
 import BaseHeadline from "../components/BaseHeadline.vue";
 import BaseButton from "../components/BaseButton.vue";
 import BaseSkeleton from "../components/BaseSkeleton.vue";
+import BaseLink from "../components/BaseLink.vue";
 
 const cart = ref<Cart | undefined>(inject("cart"));
 const refreshCart = inject<(() => Promise<Cart>) | undefined>("refreshCart");
@@ -57,6 +58,10 @@ const checkoutForm = ref({
     },
   },
 });
+
+const isCartEmpty = computed(() =>
+  cart.value?.line_items.length ? false : true
+);
 
 const handleCapture = async () => {
   isOrderLoading.value = true;
@@ -315,7 +320,7 @@ const handleCapture = async () => {
               <label class="input-group__label" for="ccv">CCV</label>
             </div>
           </fieldset>
-          <BaseButton variant="secondary">
+          <BaseButton variant="secondary" :disabled="isCartEmpty">
             <p v-if="!isOrderLoading">Confirm order</p>
             <p v-else class="loading">
               Processing order<span>.</span><span>.</span><span>.</span>
@@ -324,7 +329,10 @@ const handleCapture = async () => {
         </form>
         <div v-if="error">{{ error }}</div>
       </div>
-      <div class="checkout__summary" v-if="checkoutToken !== null">
+      <div
+        class="checkout__summary"
+        v-if="checkoutToken !== null && !isCartEmpty"
+      >
         <div class="checkout__summary-wrapper">
           <h3>Order summary</h3>
           <div
@@ -353,6 +361,12 @@ const handleCapture = async () => {
               {{ cart?.subtotal.formatted_with_symbol }}
             </p>
           </div>
+        </div>
+      </div>
+      <div v-else-if="isCartEmpty" class="checkout__summary">
+        <div class="checkout__summary-wrapper">
+          <p>You have no items in your shopping cart, start adding some!</p>
+          <BaseLink variant="secondary" to="/shop">Back to Shop</BaseLink>
         </div>
       </div>
       <div v-else class="checkout__summary">
@@ -432,6 +446,10 @@ section {
       padding: 1rem;
       border: 2px solid var(--color-primary);
 
+      & a {
+        margin-top: 1rem;
+      }
+
       &--skeleton {
         border-color: var(--text-color-primary-light-1);
       }
@@ -488,6 +506,11 @@ section {
 
     @media (min-width: 992px) and (max-width: 1400px) and (-webkit-min-device-pixel-ratio: 1.25) {
       margin: 4rem 0;
+    }
+
+    &:disabled {
+      background-color: var(--text-color-primary-light-2);
+      cursor: not-allowed;
     }
   }
 }
