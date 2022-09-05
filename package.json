@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@chec/commerce.js": "^2.8.0",
+    "@fawmi/vue-google-maps": "^0.9.79",
     "vue": "^3.2.36",
     "vue-router": "^4.0.15"
   },
