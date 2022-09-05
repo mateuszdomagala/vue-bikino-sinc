@@ -185,7 +185,7 @@ const handleCapture = async () => {
                 type="text"
                 v-model="checkoutForm.shipping.postal_zip_code"
                 name="postalZipCode"
-                required
+                readonly
               />
               <span class="input-group__bar"></span>
               <label class="input-group__label" for="postalZipCode"
@@ -466,7 +466,7 @@ section {
 
       @media (min-width: 768px) {
         display: block;
-        width: 4rem;
+        min-width: 4rem;
         height: 4rem;
         object-fit: cover;
       }
