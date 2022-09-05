@@ -17,6 +17,7 @@ jobs:
         with:
           envkey_VITE_CHEC_PUBLIC_KEY: ${{secrets.VITE_CHEC_PUBLIC_KEY}}
           envkey_VITE_CHEC_SECRET_KEY: ${{secrets.VITE_CHEC_SECRET_KEY}}
+          envkey_VITE_GOOGLE_MAPS_KEY: ${{secrets.VITE_GOOGLE_MAPS_KEY}}
           directory: './'
           file_name: '.env'          
       - name: Install dependencies

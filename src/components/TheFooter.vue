@@ -1,6 +1,8 @@
 <script setup lang="ts">
+import { ref } from "vue";
 import BaseHeadline from "./BaseHeadline.vue";
 import BaseButton from "./BaseButton.vue";
+import BaseModal from "./BaseModal.vue";
 
 const stores = [
   {
@@ -9,6 +11,10 @@ const stores = [
       street: "101 Porte Berger",
       city: "75001 Paris",
       country: "France",
+      position: {
+        lat: 48.86189925192305,
+        lng: 2.346874832472994,
+      },
     },
     email: "paris@bikinosinc.com",
     phone: "+33 569 043 0236",
@@ -19,6 +25,10 @@ const stores = [
       street: "9015 Queens Bivd",
       city: "Eimhurst",
       country: "NY 11373-4900",
+      position: {
+        lat: 40.73466105399263,
+        lng: -73.87044357727068,
+      },
     },
     email: "ny@bikinosinc.com",
     phone: "+1 718-522-5200",
@@ -29,11 +39,21 @@ const stores = [
       street: "2002 Park Royal S",
       city: "West Vancouver",
       country: "BC V7T 2W4",
+      position: {
+        lat: 49.32540470687373,
+        lng: -123.14077777115057,
+      },
     },
     email: "vancity@bikinosinc.com",
     phone: "+1 708-330-1120",
   },
 ];
+
+const isModalOpen = ref<boolean>(false);
+
+const toggleModal = () => {
+  isModalOpen.value = !isModalOpen.value;
+};
 </script>
 
 <template>
@@ -61,8 +81,25 @@ const stores = [
       <img src="../assets/images/stores.jpg" alt="store locations background" />
     </div>
     <div class="store-locations__map">
-      <BaseButton variant="primary">View<br />Map</BaseButton>
+      <BaseButton variant="primary" @click="toggleModal"
+        >View<br />Map</BaseButton
+      >
     </div>
+    <BaseModal :visible-modal="isModalOpen" @close="toggleModal">
+      <template v-slot:header>Stores</template>
+      <template v-slot:content>
+        <GMapMap
+          :center="{ lat: 45.86189925192305, lng: -60.346874832472994 }"
+          :zoom="3.9"
+        >
+          <GMapMarker
+            v-for="(store, index) in stores"
+            :position="store.address.position"
+            :key="index"
+          />
+        </GMapMap>
+      </template>
+    </BaseModal>
   </footer>
 </template>
 
@@ -173,5 +210,10 @@ footer {
     grid-area: 3 / 2 / 3 / 2;
     z-index: 3;
   }
+}
+
+.vue-map-container {
+  width: 100%;
+  height: 60vh;
 }
 </style>
