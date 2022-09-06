@@ -16,11 +16,13 @@ const router = useRouter();
 const route = useRoute();
 
 const page = ref<number>(Number(route.query.page) || 1);
-const category = ref<string | null>(null);
 const recordsPerPage = ref<number>(6);
 const isOpen = ref<boolean>(false);
 const selected = ref<string>(
   route.query.sortDirection ? String(route.query.sortDirection) : "latest"
+);
+const category = ref<string | null>(
+  route.query.category ? String(route.query.category) : null
 );
 
 const { categories } = useCategories();
@@ -28,7 +30,7 @@ const { products, metadata, error, isLoading, fetchData } = useProducts({
   limit: recordsPerPage.value,
   page: page.value,
   query: route.query.search,
-  category_id: route.query.category,
+  category_id: category.value,
   sortBy: selected.value === "latest" ? "created_at" : "price",
   sortDirection: selected.value === "latest" ? "asc" : selected.value,
 });
