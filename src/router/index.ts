@@ -40,6 +40,16 @@ const router = createRouter({
       component: () => import("../views/ConfirmationView.vue"),
       props: true,
     },
+    {
+      path: "/404",
+      name: "404",
+      component: () => import("../views/NotFoundView.vue"),
+    },
+    {
+      path: "/:pathMatch(.*)*",
+      name: "not-found",
+      redirect: "/404",
+    },
   ],
 });
 
