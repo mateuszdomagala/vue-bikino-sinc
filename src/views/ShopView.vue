@@ -127,7 +127,8 @@ watch(
     <section id="shop">
       <BaseHeadline type="h1" text="shop" :line="true" />
       <div v-if="products?.length" class="shop__products">
-        <BaseModal :visible="isOpen" @close="toggleModal">
+        <BaseModal :visibleModal="isOpen" @close="toggleModal">
+          <template v-slot:header>Categories</template>
           <template v-slot:content>
             <div class="shop__categories">
               <ul class="shop__categories-list">
